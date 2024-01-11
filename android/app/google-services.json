@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "289928100421",
+    "firebase_url": "https://slbncicendonew-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "slbncicendonew",
+    "storage_bucket": "slbncicendonew.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289928100421:android:8867af948bbe4cdd9b012c",
+        "android_client_info": {
+          "package_name": "com.fixsidang.fixsidang"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmNeLDcy24Uki0aR_xyD8YuqgO5xGeCIY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

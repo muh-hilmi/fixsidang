@@ -1,0 +1,44 @@
+name: fixsidang
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=3.1.5 <4.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.2
+  google_fonts: ^6.1.0
+  intl: ^0.18.1
+  lottie: ^2.7.0
+  carousel_slider: ^4.2.1
+  convex_bottom_bar: ^3.2.0
+  firebase_core: 2.24.0
+  cloud_firestore: ^4.13.3
+  firebase_auth: 4.15.0
+  dropdown_search: ^5.0.6
+  random_avatar: ^0.0.8
+  connectivity_plus: ^5.0.2
+  geolocator: ^10.1.0
+  geocoding: ^2.1.1
+  get: 4.6.6
+  firebase_database: 10.3.6
+  flutter_local_notifications: ^16.3.0
+  
+  flutter: 
+      sdk: flutter
+  flutter_localizations: 
+    sdk: flutter         
+
+dev_dependencies: 
+  flutter_lints: ^2.0.0
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  assets: 
+    - assets/logo/
+    - assets/icons/
+    - assets/images/
+    - assets/lotties/
+  uses-material-design: true
+
