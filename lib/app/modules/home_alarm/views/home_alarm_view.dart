@@ -367,8 +367,8 @@ class HomeAlarmView extends GetView<HomeAlarmController> {
                           onChanged: (value) {
                             if (!value || !controller.isMasukOn.value) {
                               controller.isIstirahatOn.value = value;
-                              controller.istirahat();
                               HapticFeedback.heavyImpact();
+                              controller.istirahat();
                             }
                           },
                         ),
@@ -401,8 +401,8 @@ class HomeAlarmView extends GetView<HomeAlarmController> {
                           onChanged: (value) {
                             if (!value || !controller.isIstirahatOn.value) {
                               controller.isMasukOn.value = value;
-                              controller.masuk();
                               HapticFeedback.heavyImpact();
+                              // controller.masuk();
                             }
                           },
                         ),

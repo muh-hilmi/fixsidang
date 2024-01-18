@@ -1,7 +1,6 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:vibration/vibration.dart';
 
 class NotificationService {
   static Future<void> initializeNotif() async {
@@ -9,6 +8,7 @@ class NotificationService {
         FlutterLocalNotificationsPlugin();
     const AndroidInitializationSettings androidInitializationSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
+    // AndroidInitializationSettings('assets/logo/logo.png');
 
     InitializationSettings initializationSettings =
         const InitializationSettings(android: androidInitializationSettings);
@@ -38,32 +38,35 @@ class NotificationService {
   }
 
   static Future<void> showNotif(
+    int numberOfRepeats,
     String title,
     String body,
   ) async {
-    final Int64List vibrationPattern = Int64List(4);
-    vibrationPattern[0] = 1000;
-    vibrationPattern[1] = 500;
-    vibrationPattern[2] = 1000;
-    vibrationPattern[3] = 500;
+    List<int> vibrationPattern = [500, 500];
+
+    // Duplicate the pattern for the specified number of repeats
+    List<int> extendedPattern = List<int>.generate(
+      numberOfRepeats * vibrationPattern.length,
+      (index) => vibrationPattern[index % vibrationPattern.length],
+    );
+    Vibration.vibrate(duration: 0, pattern: extendedPattern);
+
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
+
     AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
-      "1",
-      "Aplikasi SLBN Cicendo",
-      importance: Importance.high,
+        const AndroidNotificationDetails(
+      '1111',
+      'Notifikasi Bencana',
+      importance: Importance.max,
       priority: Priority.high,
       ticker: "ticker",
-      enableVibration: true,
-      onlyAlertOnce: false,
-      vibrationPattern: vibrationPattern, // Not working
     );
 
     NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
 
     await flutterLocalNotificationsPlugin.show(
-        0, title, body, notificationDetails);
+        1, title, body, notificationDetails);
   }
 }

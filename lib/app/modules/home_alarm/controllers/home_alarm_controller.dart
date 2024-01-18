@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:fixsidang/app/services/notif_services.dart';
 import 'package:get/get.dart';
 
 class HomeAlarmController extends GetxController {
@@ -19,7 +18,7 @@ class HomeAlarmController extends GetxController {
   RxInt device1humid = 0.obs;
 
   DatabaseReference ref = FirebaseDatabase.instance.ref("/lampu");
-  DatabaseReference sensor1Ref = FirebaseDatabase.instance.ref();
+  DatabaseReference sensor1Ref = FirebaseDatabase.instance.ref("/device1");
 
   Timer? timer;
 
@@ -27,20 +26,29 @@ class HomeAlarmController extends GetxController {
   void onInit() {
     super.onInit();
     // Memasang listener pada path yang sesuai di Firebase Realtime Database
-    ref.onValue.listen((event) {
+    ref.onValue.listen((event) async {
       // Mengupdate nilai dari isIstirahatOn berdasarkan data di Firebase
       var data = event.snapshot.value
           as Map<dynamic, dynamic>?; // Berikan tipe data Map<dynamic, dynamic>
+      print(data);
       if (data != null) {
         // Update nilai isIstirahatOn
-        if (data['istirahat'] != null) {
-          isIstirahatOn.value = data['istirahat'] == 0;
-        }
+        // if (data['istirahat'] == 1) {
+        isIstirahatOn.value = data['istirahat'] == 0;
+        // istirahat(isIstirahatOn);
+        // print(isIstirahatOn.value);
+        // }
 
         // Update nilai isMasukOn
-        if (data['masuk'] != null) {
-          isMasukOn.value = data['masuk'] == 0;
-        }
+        // if (data['masuk'] != null) {
+        isMasukOn.value = data['masuk'] == 0;
+        // masuk(isMasukOn.value);
+        // }
+      } else {
+        await ref.set({
+          "istirahat": 1,
+          "masuk": 1,
+        });
       }
     });
 
@@ -69,7 +77,6 @@ class HomeAlarmController extends GetxController {
         }
         if (data['Humidity'] != null) {
           device1humid.value = data['Humidity'];
-          print(device1humid);
         }
       }
     });
@@ -81,10 +88,7 @@ class HomeAlarmController extends GetxController {
 
   void istirahat() async {
     try {
-      await ref.set({
-        "istirahat": 1,
-        "masuk": 1,
-      });
+      // Lampus Istirahat nyala
       if (isIstirahatOn == true) {
         await ref.update({
           "istirahat": 0,
@@ -99,28 +103,22 @@ class HomeAlarmController extends GetxController {
     } catch (e) {
       Get.snackbar("Terjadi Kesalahan", "Error di Lampu Istirahat: $e");
     }
-    NotificationService.showNotif(
-        "Lampu Istirahat", "Yeay, akhirnya istirahat!");
   }
 
-  void masuk() async {
-    await ref.set({
-      "istirahat": 1,
-      "masuk": 1,
-    });
-    if (isMasukOn == true) {
-      await ref.update({
-        "istirahat": 1,
-        "masuk": 0,
-      });
-    } else {
-      await ref.update({
-        "istirahat": 1,
-        "masuk": 1,
-      });
-    }
-    NotificationService.showNotif("Lampu Masuk", "Saatnya masuk kelas!");
-  }
+  // void masuk(isMasukOnData) async {
+  //   if (isMasukOnData == true) {
+  //     await ref.update({
+  //       "istirahat": 1,
+  //       "masuk": 0,
+  //     });
+  //     NotificationService.showNotif(8, "Lampu Masuk", "Saatnya masuk kelas!");
+  //   } else {
+  //     await ref.update({
+  //       "istirahat": 1,
+  //       "masuk": 1,
+  //     });
+  //   }
+  // }
 
   // Function to update the current time
   void updateTime() {

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fixsidang/app/controllers/page_index_controller.dart';
 import 'package:fixsidang/app/routes/app_pages.dart';
+import 'package:fixsidang/app/services/notif_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -80,7 +81,8 @@ class HomeView extends GetView<HomeController> {
                               ),
                             ),
                             IconButton(
-                              onPressed: () {
+                              onPressed: () async {
+                                await NotificationService.initializeNotif();
                                 Get.toNamed(Routes.HOME_ALARM);
                               },
                               icon: const Icon(
