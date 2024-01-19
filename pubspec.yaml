@@ -26,6 +26,7 @@ dependencies:
   vibration: ^1.8.4
   alarm: ^3.0.5
   permission_handler: ^9.0.2
+  firebase_messaging: ^14.7.6
   
   flutter: 
       sdk: flutter
