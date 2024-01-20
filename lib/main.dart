@@ -20,7 +20,6 @@ Future<void> main() async {
   FirebaseDatabase.instance.setPersistenceEnabled(true);
 
   await NotificationService.initializeNotif();
-  await BackgroundNotificationService.initService();
 
   runApp(MyApp());
 }

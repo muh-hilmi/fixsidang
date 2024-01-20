@@ -131,8 +131,4 @@ class HomeAlarmController extends GetxController {
     timer?.cancel();
     super.onClose();
   }
-
-  void budug(){
-    print('budug');
-  }
 }
