@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fixsidang/app/controllers/page_index_controller.dart';
 import 'package:fixsidang/app/modules/home/views/home_view.dart';
+import 'package:fixsidang/app/services/background_notification_services.dart';
 import 'package:fixsidang/app/services/notif_services.dart';
 import 'package:fixsidang/app/views/views/splashscreen_view.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ Future<void> main() async {
   FirebaseDatabase.instance.setPersistenceEnabled(true);
 
   await NotificationService.initializeNotif();
+  await BackgroundNotificationService.initService();
+
   runApp(MyApp());
 }
 

@@ -20,7 +20,7 @@ dependencies:
   firebase_auth: 4.15.0
   firebase_core: 2.24.2
   firebase_database: ^10.4.0
-  firebase_messaging: ^14.7.6
+  flutter_background_service: ^3.0.1
   flutter_local_notifications: ^16.3.0
   geocoding: ^2.1.1
   geolocator: ^10.1.0
