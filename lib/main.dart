@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fixsidang/app/controllers/page_index_controller.dart';
 import 'package:fixsidang/app/modules/home/views/home_view.dart';
 import 'package:fixsidang/app/services/notif_services.dart';
@@ -23,23 +22,10 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   final pageindex = Get.put(PageIndexController());
   final home = Get.put(HomeView());
-
-  @override
-  void initState() {
-    super.initState();
-
-    FirebaseMessaging.instance.subscribeToTopic('slbncicendo');
-  }
 
   @override
   Widget build(BuildContext context) {
