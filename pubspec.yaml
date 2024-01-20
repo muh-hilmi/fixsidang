@@ -24,15 +24,20 @@ dependencies:
   firebase_database: 10.3.6
   flutter_local_notifications: ^16.3.0
   vibration: ^1.8.4
-  alarm: ^3.0.5
-  permission_handler: ^9.0.2
+  # flutter_background_service: ^5.0.5
   
   flutter: 
       sdk: flutter
   flutter_localizations: 
     sdk: flutter         
 
-dev_dependencies: 
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo/logo.png"
+
+dev_dependencies:
+  flutter_launcher_icons: "^0.13.1" 
   flutter_lints: ^2.0.0
   flutter_test: 
     sdk: flutter

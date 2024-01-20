@@ -402,7 +402,7 @@ class HomeAlarmView extends GetView<HomeAlarmController> {
                             if (!value || !controller.isIstirahatOn.value) {
                               controller.isMasukOn.value = value;
                               HapticFeedback.heavyImpact();
-                              // controller.masuk();
+                              controller.masuk();
                             }
                           },
                         ),
