@@ -6,10 +6,6 @@ environment:
   sdk: '>=3.1.5 <4.0.0'
 
 dependencies:
-  flutter:
-    sdk: flutter
-  flutter_localizations:
-    sdk: flutter
   alarm: ^3.0.5
   carousel_slider: ^4.2.1
   cloud_firestore: ^4.13.3
@@ -31,8 +27,6 @@ dependencies:
   permission_handler: ^9.0.2
   random_avatar: ^0.0.8
   vibration: ^1.8.4
-  alarm: ^3.0.5
-  permission_handler: ^9.0.2
   
   flutter: 
       sdk: flutter
@@ -43,7 +37,6 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test: 
     sdk: flutter
-  flutter_lints: ^2.0.0
 
 flutter:
   assets:
