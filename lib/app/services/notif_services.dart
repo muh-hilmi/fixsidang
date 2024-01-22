@@ -5,10 +5,13 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:fixsidang/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:vibration/vibration.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 
 class NotificationService {
+  static RxBool firstLaunchApp = true.obs;
+
   static Future<void> initializeNotif() async {
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
@@ -139,14 +142,18 @@ class NotificationService {
   }
 
   static void listenBencana() {
-    // listen database bencana
     DatabaseReference ref = FirebaseDatabase.instance.ref("/bencana");
     ref.onValue.listen((event) async {
       var data = event.snapshot.value as Map<dynamic, dynamic>;
-
-      // tampilkan notifikasi ketika ada perubahan data benceana
-      NotificationService.showNotif(
+      
+      if (firstLaunchApp.isFalse) {
+        // tampilkan notifikasi ketika ada perubahan data benceana
+        NotificationService.showNotif(
           2, 'Peringatan Bencana', data[data.keys.last]);
+      }
+
+      firstLaunchApp.value = false;
+
     });
   }
 }
