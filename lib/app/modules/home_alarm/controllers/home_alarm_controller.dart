@@ -17,6 +17,7 @@ class HomeAlarmController extends GetxController {
   RxDouble device1magnitude = 0.0.obs;
   RxDouble device1temperature = 0.0.obs;
   RxInt device1humid = 0.obs;
+
   RxInt device2flame2 = 0.obs;
   RxInt device2flame3 = 0.obs;
   RxInt device2flame4 = 0.obs;

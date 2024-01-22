@@ -163,7 +163,7 @@ class HomeAlarmView extends GetView<HomeAlarmController> {
                                     ),
                                   ),
                                   Text(
-                                    "Device 2 : \nSuhu : 30 C | Kelembapan : 40",
+                                    "Device 2 : \nSuhu : ${controller.device2temperature} | Kelembapan :  ${controller.device2humid}",
                                     style: GoogleFonts.lato(
                                       fontSize: 16,
                                       color: Colors.white,
@@ -200,7 +200,7 @@ class HomeAlarmView extends GetView<HomeAlarmController> {
                                     ),
                                   ),
                                   Text(
-                                    "Device 2: \nGas : 600",
+                                    "Device 2: \nGas : ${controller.device2gas}",
                                     style: GoogleFonts.lato(
                                       fontSize: 16,
                                       color: Colors.white,
@@ -265,7 +265,7 @@ class HomeAlarmView extends GetView<HomeAlarmController> {
                                     ),
                                   ),
                                   Text(
-                                    "Device 2 : \nApi1 : 90 | Api2 : 90 | Api3 : 90",
+                                    "Device 2 : \nApi1 : ${controller.device2flame2} | Api2 : ${controller.device2flame3} | Api3 : ${controller.device2flame4}",
                                     style: GoogleFonts.lato(
                                       fontSize: 16,
                                       color: Colors.white,
@@ -302,7 +302,7 @@ class HomeAlarmView extends GetView<HomeAlarmController> {
                                     ),
                                   ),
                                   Text(
-                                    "Device 2: \nMagnitude : controller.magnitude.toStringAsFixed(3)",
+                                    "Device 2: \nMagnitude : ${controller.device2magnitude.toStringAsFixed(3)}",
                                     style: GoogleFonts.lato(
                                       fontSize: 16,
                                       color: Colors.white,

@@ -127,7 +127,7 @@ class NotificationService {
       // tampilkan notifikasi ketika kelas istirahat
       if (data['istirahat'] == 0) {
         NotificationService.showNotif(
-            3, 'Istirahat', 'Yeayyy!!, waktunya istirahat');
+            3, 'Istirahat', 'Yeayyy!, waktunya istirahat');
       }
 
       // tampilkan notifikasi ketika kelas masuk
