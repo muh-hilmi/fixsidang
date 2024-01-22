@@ -26,7 +26,7 @@ class NotificationService {
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveBackgroundNotificationResponse: getResponNotif);
-  
+
     final service = FlutterBackgroundService();
 
     await service.configure(
@@ -130,19 +130,13 @@ class NotificationService {
       // tampilkan notifikasi ketika kelas istirahat
       if (data['istirahat'] == 0) {
         NotificationService.showNotif(
-          2,
-          'Istirahat',
-          'Yeayyy!!, waktunya istirahat',
-        );
+            3, 'Istirahat', 'Yeayyy!!, waktunya istirahat');
       }
 
       // tampilkan notifikasi ketika kelas masuk
       if (data['masuk'] == 0) {
         NotificationService.showNotif(
-          2,
-          'Masuk Kelas',
-          'Sudah waktunya masuk kelas nih',
-        );
+            5, 'Masuk Kelas', 'Sudah waktunya masuk kelas nih');
       }
     });
   }
@@ -151,17 +145,15 @@ class NotificationService {
     DatabaseReference ref = FirebaseDatabase.instance.ref("/bencana");
     ref.onValue.listen((event) async {
       var data = event.snapshot.value as Map<dynamic, dynamic>;
-    
+      
       if (firstLaunchApp.isFalse) {
         // tampilkan notifikasi ketika ada perubahan data benceana
         NotificationService.showNotif(
-          5,
-          'Peringatan Bencana',
-          data[data.keys.last],
-        );
+          2, 'Peringatan Bencana', data[data.keys.last]);
       }
 
       firstLaunchApp.value = false;
+
     });
   }
 }

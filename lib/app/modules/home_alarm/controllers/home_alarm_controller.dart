@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:fixsidang/app/services/notif_services.dart';
 import 'package:get/get.dart';
 
 class HomeAlarmController extends GetxController {
@@ -16,9 +17,17 @@ class HomeAlarmController extends GetxController {
   RxDouble device1magnitude = 0.0.obs;
   RxDouble device1temperature = 0.0.obs;
   RxInt device1humid = 0.obs;
+  RxInt device2flame2 = 0.obs;
+  RxInt device2flame3 = 0.obs;
+  RxInt device2flame4 = 0.obs;
+  RxInt device2gas = 0.obs;
+  RxDouble device2magnitude = 0.0.obs;
+  RxDouble device2temperature = 0.0.obs;
+  RxInt device2humid = 0.obs;
 
   DatabaseReference ref = FirebaseDatabase.instance.ref("/lampu");
   DatabaseReference sensor1Ref = FirebaseDatabase.instance.ref("/device1");
+  DatabaseReference sensor2Ref = FirebaseDatabase.instance.ref("/device2");
 
   Timer? timer;
 
@@ -32,18 +41,16 @@ class HomeAlarmController extends GetxController {
           as Map<dynamic, dynamic>?; // Berikan tipe data Map<dynamic, dynamic>
       print(data);
       if (data != null) {
-        // Update nilai isIstirahatOn
-        // if (data['istirahat'] == 1) {
         isIstirahatOn.value = data['istirahat'] == 0;
-        // istirahat(isIstirahatOn);
-        // print(isIstirahatOn.value);
-        // }
-
-        // Update nilai isMasukOn
-        // if (data['masuk'] != null) {
+        if (isIstirahatOn.value) {
+          NotificationService.showNotif(
+              8, "Lampu Istirahat", "Yeay, Akhirnya istirahat");
+        }
         isMasukOn.value = data['masuk'] == 0;
-        // masuk(isMasukOn.value);
-        // }
+        if (isMasukOn.value) {
+          NotificationService.showNotif(
+              8, "Lampu Masuk", "Saatnya masuk kelas!");
+        }
       } else {
         await ref.set({
           "istirahat": 1,
@@ -80,6 +87,33 @@ class HomeAlarmController extends GetxController {
         }
       }
     });
+    sensor2Ref.onValue.listen((event) {
+      var data = event.snapshot.value as Map<dynamic, dynamic>?;
+
+      if (data != null) {
+        if (data['Api2'] != null) {
+          device2flame2.value = data['Api2'];
+        }
+        if (data['Api3'] != null) {
+          device2flame3.value = data['Api3'];
+        }
+        if (data['Api4'] != null) {
+          device2flame4.value = data['Api4'];
+        }
+        if (data['Gas'] != null) {
+          device2gas.value = data['Gas'];
+        }
+        if (data['Magnitude'] != null) {
+          device2magnitude.value = data['Magnitude'];
+        }
+        if (data['Temperature'] != null) {
+          device2temperature.value = data['Temperature'];
+        }
+        if (data['Humidity'] != null) {
+          device2humid.value = data['Humidity'];
+        }
+      }
+    });
 
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       updateTime();
@@ -88,37 +122,25 @@ class HomeAlarmController extends GetxController {
 
   void istirahat() async {
     try {
-      // Lampus Istirahat nyala
-      if (isIstirahatOn == true) {
-        await ref.update({
-          "istirahat": 0,
-          "masuk": 1,
-        });
-      } else {
-        await ref.update({
-          "istirahat": 1,
-          "masuk": 1,
-        });
-      }
+      await ref.update({
+        "istirahat": isIstirahatOn == true ? 0 : 1,
+        "masuk": 1,
+      });
     } catch (e) {
       Get.snackbar("Terjadi Kesalahan", "Error di Lampu Istirahat: $e");
     }
   }
 
-  // void masuk(isMasukOnData) async {
-  //   if (isMasukOnData == true) {
-  //     await ref.update({
-  //       "istirahat": 1,
-  //       "masuk": 0,
-  //     });
-  //     NotificationService.showNotif(8, "Lampu Masuk", "Saatnya masuk kelas!");
-  //   } else {
-  //     await ref.update({
-  //       "istirahat": 1,
-  //       "masuk": 1,
-  //     });
-  //   }
-  // }
+  void masuk() async {
+    try {
+      await ref.update({
+        "istirahat": 1,
+        "masuk": isMasukOn == true ? 0 : 1,
+      });
+    } catch (e) {
+      Get.snackbar("Terjadi Kesalahan", "Error di Lampu Istirahat: $e");
+    }
+  }
 
   // Function to update the current time
   void updateTime() {
