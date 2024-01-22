@@ -5,10 +5,13 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:fixsidang/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:vibration/vibration.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 
 class NotificationService {
+  static RxBool firstLaunchApp = true.obs;
+
   static Future<void> initializeNotif() async {
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
@@ -127,26 +130,38 @@ class NotificationService {
       // tampilkan notifikasi ketika kelas istirahat
       if (data['istirahat'] == 0) {
         NotificationService.showNotif(
-            0, 'Istirahat', 'Yeayyy!!, waktunya istirahat');
+          2,
+          'Istirahat',
+          'Yeayyy!!, waktunya istirahat',
+        );
       }
 
       // tampilkan notifikasi ketika kelas masuk
       if (data['masuk'] == 0) {
         NotificationService.showNotif(
-            0, 'Masuk Kelas', 'Sudah waktunya masuk kelas nih');
+          2,
+          'Masuk Kelas',
+          'Sudah waktunya masuk kelas nih',
+        );
       }
     });
   }
 
   static void listenBencana() {
-    // listen database bencana
     DatabaseReference ref = FirebaseDatabase.instance.ref("/bencana");
     ref.onValue.listen((event) async {
       var data = event.snapshot.value as Map<dynamic, dynamic>;
-      
-      // tampilkan notifikasi ketika ada perubahan data benceana
-      NotificationService.showNotif(
-          0, 'Peringatan Bencana', data[data.keys.last]);
+    
+      if (firstLaunchApp.isFalse) {
+        // tampilkan notifikasi ketika ada perubahan data benceana
+        NotificationService.showNotif(
+          5,
+          'Peringatan Bencana',
+          data[data.keys.last],
+        );
+      }
+
+      firstLaunchApp.value = false;
     });
   }
 }
