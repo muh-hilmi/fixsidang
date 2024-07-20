@@ -145,15 +145,15 @@ class NotificationService {
     DatabaseReference ref = FirebaseDatabase.instance.ref("/bencana");
     ref.onValue.listen((event) async {
       var data = event.snapshot.value as Map<dynamic, dynamic>;
-      
+      var dataTerakhir = data[data.keys.last];
+
       if (firstLaunchApp.isFalse) {
         // tampilkan notifikasi ketika ada perubahan data benceana
-        NotificationService.showNotif(
-          2, 'Peringatan Bencana', data[data.keys.last]);
+        NotificationService.showNotif(2, 'Peringatan Bencana',
+            "Ada bencana! Silahkan menuju tempat yang aman");
       }
-
+      print(data.keys.last);
       firstLaunchApp.value = false;
-
     });
   }
 }

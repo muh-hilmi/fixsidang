@@ -10,25 +10,34 @@ class HomeAlarmController extends GetxController {
   var isMasukOn = false.obs;
   RxString currentTime = ''.obs;
 
-  RxInt device1flame2 = 0.obs;
-  RxInt device1flame3 = 0.obs;
-  RxInt device1flame4 = 0.obs;
-  RxInt device1gas = 0.obs;
-  RxDouble device1magnitude = 0.0.obs;
-  RxDouble device1temperature = 0.0.obs;
-  RxInt device1humid = 0.obs;
+  var device1flame2 = 0.obs;
+  var device1flame3 = 0.obs;
+  var device1flame4 = 0.obs;
+  var device1gas = 0.obs;
+  var device1magnitude = 0.0.obs;
+  var device1temperature = 0.0.obs;
+  var device1humid = 0.0.obs;
 
-  RxInt device2flame2 = 0.obs;
-  RxInt device2flame3 = 0.obs;
-  RxInt device2flame4 = 0.obs;
-  RxInt device2gas = 0.obs;
-  RxDouble device2magnitude = 0.0.obs;
-  RxDouble device2temperature = 0.0.obs;
-  RxInt device2humid = 0.obs;
+  var device2flame2 = 0.obs;
+  var device2flame3 = 0.obs;
+  var device2flame4 = 0.obs;
+  var device2gas = 0.obs;
+  var device2magnitude = 0.0.obs;
+  var device2temperature = 0.0.obs;
+  var device2humid = 0.0.obs;
+
+  var device3flame2 = 0.obs;
+  var device3flame3 = 0.obs;
+  var device3flame4 = 0.obs;
+  var device3gas = 0.obs;
+  var device3magnitude = 0.0.obs;
+  var device3temperature = 0.0.obs;
+  var device3humid = 0.obs;
 
   DatabaseReference ref = FirebaseDatabase.instance.ref("/lampu");
   DatabaseReference sensor1Ref = FirebaseDatabase.instance.ref("/device1");
   DatabaseReference sensor2Ref = FirebaseDatabase.instance.ref("/device2");
+  DatabaseReference sensor3Ref = FirebaseDatabase.instance.ref("/device3");
 
   Timer? timer;
 
@@ -112,6 +121,33 @@ class HomeAlarmController extends GetxController {
         }
         if (data['Humidity'] != null) {
           device2humid.value = data['Humidity'];
+        }
+      }
+    });
+    sensor3Ref.onValue.listen((event) {
+      var data = event.snapshot.value as Map<dynamic, dynamic>?;
+
+      if (data != null) {
+        if (data['Api2'] != null) {
+          device3flame2.value = data['Api2'];
+        }
+        if (data['Api3'] != null) {
+          device3flame3.value = data['Api3'];
+        }
+        if (data['Api4'] != null) {
+          device3flame4.value = data['Api4'];
+        }
+        if (data['Gas'] != null) {
+          device3gas.value = data['Gas'];
+        }
+        if (data['Magnitude'] != null) {
+          device3magnitude.value = data['Magnitude'];
+        }
+        if (data['Temperature'] != null) {
+          device3temperature.value = data['Temperature'];
+        }
+        if (data['Humidity'] != null) {
+          device3humid.value = data['Humidity'];
         }
       }
     });

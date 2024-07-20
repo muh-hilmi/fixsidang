@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,61 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // DatabaseReference ref = FirebaseDatabase.instance.ref("/bencana");
+  RxString timeAgo = "Tidak ada".obs;
+
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   // bencana();
+  // }
+
+  // void bencana() {
+  //   print("DIJALANKAN");
+  //   ref.onValue.listen((event) async {
+  //     var data = event.snapshot.value as Map<dynamic, dynamic>;
+  //     // print(data.keys.last);
+  //     var dataTerakhir = data.keys.last.toString();
+
+  //     // Mendapatkan nilai untuk tanggal hari ini
+  //     var todayData = data[data.keys.last];
+
+  //     // Memeriksa apakah ada data untuk tanggal hari ini
+  //     if (todayData != null) {
+  //       // Mendapatkan nilai waktu dari string
+  //       String timeString = todayData.split(" ")[6];
+  //       // print(timeString);
+
+  //       // Membuat string lengkap dengan tanggal dan waktu
+  //       String dateTimeString = "$dataTerakhir $timeString";
+
+  //       // Mengonversi string menjadi objek DateTime
+  //       DateTime dateTime = DateTime.parse(dateTimeString);
+
+  //       // Menghitung selisih waktu
+  //       Duration difference = DateTime.now().difference(dateTime);
+
+  //       // Mengonversi selisih waktu menjadi format yang diinginkan
+  //       timeAgo.value = formatTimeAgo(difference);
+
+  //       // print(timeAgo);
+  //     } else {
+  //       print("data kosong");
+  //     }
+  //   });
+  // }
+
+  // String formatTimeAgo(Duration difference) {
+  //   if (difference.inDays > 0) {
+  //     return '${difference.inDays} hari yang lalu';
+  //   } else if (difference.inHours > 0) {
+  //     return '${difference.inHours} jam yang lalu';
+  //   } else if (difference.inMinutes > 0) {
+  //     return '${difference.inMinutes} menit yang lalu';
+  //   } else {
+  //     return 'baru saja';
+  //   }
+  // }
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamUser() async* {
     String uid = await auth.currentUser!.uid;
@@ -20,7 +76,7 @@ class HomeController extends GetxController {
     String hariIni = dateFormat.format(DateTime.now());
     CollectionReference jadwal = firestore.collection('jadwal');
 
-    Query query = jadwal.where('hari', isEqualTo: hariIni);
+    var query = jadwal.where('hari', isEqualTo: hariIni);
 
     if (role != "Admin" && role != "Tua") {
       query = query

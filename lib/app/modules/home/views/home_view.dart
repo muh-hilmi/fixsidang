@@ -319,40 +319,12 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "Kebakaran",
-                                          style: GoogleFonts.lato(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        const Text("Aman"),
-                                      ],
-                                    ),
-                                    Container(
-                                      width: 1,
-                                      height: 40,
-                                      color: Colors.white,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "Gempa Bumi",
-                                          style: GoogleFonts.lato(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        const Text("Aman"),
-                                      ],
-                                    )
-                                  ],
+                                Text(
+                                  "${controller.timeAgo}",
+                                  style: GoogleFonts.lato(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ],
                             ),
